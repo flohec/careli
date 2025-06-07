@@ -12,8 +12,8 @@ export const UserProvider = ({ children }) => {
         const fetchUser = async () => {
             try {
                 const response = await axios.get('/api/user'); // Adjust the endpoint to match your backend
-                if (response.data.loggedIn) {
-                    setUser(response.data.user); // Set user data if logged in
+                if (response.data.data) {
+                    setUser(response.data.data); // Set user data if logged in
                 } else {
                     setUser(null); // Set to null if not logged in
                 }
@@ -26,16 +26,8 @@ export const UserProvider = ({ children }) => {
         fetchUser();
     }, []);
 
-    const login = (userData) => {
-        setUser(userData);
-    };
-
-    const logout = () => {
-        setUser(null);
-    };
-
     return (
-        <UserContext.Provider value={{ user, login, logout }}>
+        <UserContext.Provider value={{ user }}>
             {children}
         </UserContext.Provider>
     );
