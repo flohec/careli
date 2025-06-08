@@ -5,10 +5,10 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class CompanyResource extends JsonResource
 {
     /**
-     * Transform the resource into an array with selected attributes.
+     * Transform the resource into an array.
      *
      * @return array<string, mixed>
      */
@@ -16,11 +16,9 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
             'name' => $this->name,
-            'full_name' => $this->full_name,
             'email' => $this->email,
-            'role' => $this->role,
+            'discount' => $this->discount,
             'company' => $this->company,
             'country' => $this->address->country,
             'city' => $this->address->city,

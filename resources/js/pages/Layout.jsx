@@ -8,6 +8,8 @@ const { Header, Content, Footer } = Layout;
 
 export default function AppLayout() {
     const { user, login, logout } = useUser();
+    const role = user ? user?.role?.slug : 'guest';
+    console.log('Current role:', role);
     const [loginModalVisible, setLoginModalVisible] = useState(false);
     const [form] = Form.useForm();
 
@@ -58,9 +60,11 @@ export default function AppLayout() {
                     <Menu.Item key="about">
                         <Link style={{ fontWeight: 'bold' }} to="/about">About</Link>
                     </Menu.Item>
-                    <Menu.Item key="admin">
-                        <Link style={{ fontWeight: 'bold' }} to="/admin">Admin</Link>
-                    </Menu.Item>
+                    { role === 'admin' && (
+                        <Menu.Item key="admin">
+                            <Link style={{ fontWeight: 'bold' }} to="/admin">Admin</Link>
+                        </Menu.Item>
+                    )}
                 </Menu>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
                     <Badge count={3} style={{ backgroundColor: '#007BFF' }}>
@@ -106,7 +110,7 @@ export default function AppLayout() {
             <Content style={{ padding: '1rem', flex: 1 }}>
                 <Outlet />
             </Content>
-            <Footer style={{ textAlign: 'center', background: '#007BFF', color: '#fff' }}>
+            <Footer style={{ textAlign: 'center', background: '#2D94DE', color: '#fff' }}>
                 © {new Date().getFullYear()} My Application. All rights reserved.
             </Footer>
         </Layout>

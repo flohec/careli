@@ -15,3 +15,9 @@ html, body, #app {
     --background-color: #F8F9FA;
     --text-color: #212529;
 }
+
+.clickable-row:hover {
+    cursor: pointer;
+    background-color: #f5f5f5;
+}
+
