@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
@@ -18,7 +19,11 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::group(['prefix' => 'api/admin'], function () {
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
     Route::get('/get-all-companies', [CompanyController::class, 'getAllCompanies']);
+    Route::get('/get-all-articles', [ArticleController::class, 'getAllArticles']);
 
     Route::put('/update-company/{company}', [CompanyController::class, 'update']);
     Route::put('/update-user/{user}', [UserController::class, 'update']);
+
+    Route::post('/articles', [ArticleController::class, 'store']);
+    Route::put('/articles/{article}', [ArticleController::class, 'update']);
 });
