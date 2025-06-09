@@ -18,4 +18,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::group(['prefix' => 'api/admin'], function () {
     Route::get('/get-all-users', [UserController::class, 'getAllUsers']);
     Route::get('/get-all-companies', [CompanyController::class, 'getAllCompanies']);
+
+    Route::put('/update-company/{company}', [CompanyController::class, 'update']);
+    Route::put('/update-user/{user}', [UserController::class, 'update']);
 });

@@ -33,4 +33,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function update(Request $request, User $company)
+    {
+        $company->update($request->only('first_name', 'name', 'email'));
+
+        $company->address()->updateOrCreate(
+            [],
+            $request->only('country', 'postal_code', 'city', 'street')
+        );
+
+        return response()->json(['message' => 'User updated successfully']);
+    }
+
 }

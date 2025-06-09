@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Company extends Model
 {
+    protected $fillable = [
+        'name',
+        'email',
+        'discount',
+    ];
+
     public function address() : MorphOne
     {
         return $this->morphOne(Addressee::class, 'addressable');

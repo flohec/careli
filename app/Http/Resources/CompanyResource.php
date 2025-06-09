@@ -19,10 +19,9 @@ class CompanyResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'discount' => $this->discount,
-            'company' => $this->company,
             'country' => $this->address->country,
             'city' => $this->address->city,
-            'address' => $this->address->address,
+            'street' => $this->address->street,
             'postal_code' => $this->address->postal_code,
         ];
     }

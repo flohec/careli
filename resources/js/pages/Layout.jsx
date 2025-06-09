@@ -3,13 +3,15 @@ import { Link, Outlet } from 'react-router-dom';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import {useUser} from "../context/UserContext.jsx";
 import {useState} from "react";
+import { useLocation } from 'react-router-dom';
 
 const { Header, Content, Footer } = Layout;
 
 export default function AppLayout() {
+    const location = useLocation();
+    const currentPath = location.pathname.split('/')[1] || 'home';
     const { user, login, logout } = useUser();
     const role = user ? user?.role?.slug : 'guest';
-    console.log('Current role:', role);
     const [loginModalVisible, setLoginModalVisible] = useState(false);
     const [form] = Form.useForm();
 
@@ -50,7 +52,7 @@ export default function AppLayout() {
                         marginRight: '2%',
                     }}
                 />
-                <Menu mode="horizontal" defaultSelectedKeys={['home']} style={{ lineHeight: '80px', flex: 1 }}>
+                <Menu mode="horizontal" selectedKeys={[currentPath]} style={{ lineHeight: '80px', flex: 1 }}>
                     <Menu.Item key="home">
                         <Link style={{ fontWeight: 'bold' }} to="/">Home</Link>
                     </Menu.Item>
@@ -86,7 +88,23 @@ export default function AppLayout() {
                         }
                         trigger={['click']}
                     >
-                        <Avatar icon={<UserOutlined />} size={50} style={{ cursor: 'pointer' }} />
+                        <Avatar
+                            icon={<UserOutlined />}
+                            size={50}
+                            style={{
+                                backgroundColor: '#1677FF',
+                                cursor: 'pointer',
+                                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.transform = 'scale(1.05)';
+                                e.currentTarget.style.boxShadow = '0 4px 12px rgba(22, 119, 255, 0.4)';
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.transform = 'scale(1)';
+                                e.currentTarget.style.boxShadow = 'none';
+                            }}
+                        />
                     </Dropdown>
                 </div>
             </Header>

@@ -46,14 +46,25 @@ export default function UserManagement() {
 
     useEffect(() => {
         fetchUsers(pagination.current, pagination.pageSize, role, search);
-    }, []);
-
-    useEffect(() => {
-        fetchUsers(pagination.current, pagination.pageSize, role, search);
     }, [role, search]);
 
     const handleTableChange = (page, pageSize) => {
         fetchUsers(page, pageSize);
+    };
+
+    const handleSave = async (values) => {
+        if (!selectedCompany) return;
+
+        try {
+            await axios.put(`/api/admin/update-user/${selectedUser.id}`, values, {
+                withCredentials: true,
+            });
+
+            setDrawerVisible(false);
+            fetchUsers(pagination.current, pagination.pageSize, role, search);
+        } catch (error) {
+            console.error("Fehler beim Speichern:", error);
+        }
     };
 
     const columns = [
@@ -135,13 +146,16 @@ export default function UserManagement() {
                 onChange={handleTableChange}
             />
             <Drawer
-                title="Benutzer bearbeiten"
+                title="User bearbeiten"
                 placement="right"
                 onClose={() => setDrawerVisible(false)}
                 open={drawerVisible}
-                width={400}
+                width={450}
             >
-                <Form layout="vertical" form={form} onFinish={(values) => console.log("Saving user:", values)}>
+                <Form layout="vertical" form={form} onFinish={handleSave}>
+                    <h3 style={{ marginTop: 0, marginBottom: '10px', fontWeight: 'bold', color: '#2B93DD' }}>
+                        Allgemeine Informationen
+                    </h3>
                     <Form.Item name="first_name" label="Vorname">
                         <AntInput />
                     </Form.Item>
@@ -151,13 +165,33 @@ export default function UserManagement() {
                     <Form.Item name="email" label="Email">
                         <AntInput />
                     </Form.Item>
-                    <Form.Item>
+
+                    <hr style={{ margin: '20px 0', borderTop: '1px solid #e8e8e8' }} />
+
+                    <h3 style={{ marginBottom: '10px', fontWeight: 'bold', color: '#2B93DD' }}>
+                        Adressinformationen
+                    </h3>
+                    <Form.Item name="country" label="Land">
+                        <AntInput />
+                    </Form.Item>
+                    <Form.Item name="city" label="Stadt">
+                        <AntInput />
+                    </Form.Item>
+                    <Form.Item name="postal_code" label="Postleitzahl">
+                        <AntInput />
+                    </Form.Item>
+                    <Form.Item name="street" label="Straße">
+                        <AntInput />
+                    </Form.Item>
+
+                    <Form.Item style={{ marginTop: 30 }}>
                         <Button type="primary" htmlType="submit" block>
                             Speichern
                         </Button>
                     </Form.Item>
                 </Form>
             </Drawer>
+
 
         </div>
     );

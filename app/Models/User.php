@@ -14,6 +14,15 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name',
+        'first_name',
+        'email',
+        'password',
+        'role_id',
+        'company_id',
+    ];
+
     protected $appends = ['full_name'];
 
     public function isAdmin(): bool

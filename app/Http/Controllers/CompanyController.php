@@ -29,4 +29,17 @@ class CompanyController extends Controller
             ],
         ]);
     }
+
+    public function update(Request $request, Company $company)
+    {
+        $company->update($request->only('name', 'email', 'discount'));
+
+        $company->address()->updateOrCreate(
+            [],
+            $request->only('country', 'postal_code', 'city', 'street')
+        );
+
+        return response()->json(['message' => 'Company updated successfully']);
+    }
+
 }
