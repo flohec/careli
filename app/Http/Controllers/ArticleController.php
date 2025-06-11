@@ -7,7 +7,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 
 class ArticleController extends Controller
 {
@@ -55,19 +54,13 @@ class ArticleController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = Str::random(10) . '.' . $extension;
 
-            $originalPath = "public/articles/{$article->id}/original_$filename";
-            $thumbPath = "public/articles/{$article->id}/thumb_$filename";
+            $path = "articles/{$article->id}/original_$filename";
 
-            Storage::put($originalPath, file_get_contents($file));
+            // Save the file in the correct public directory
+            $file->storeAs("public/$path", $file->getContent());
 
-            $thumbnail = Image::make($file)->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->encode($extension);
-
-            Storage::put($thumbPath, (string) $thumbnail);
-
-            $article->filepath = Storage::url($originalPath);
-            $article->thumbnail = Storage::url($thumbPath);
+            // Generate a public URL for the file
+            $article->filepath = Storage::url($path);
             $article->save();
         }
 

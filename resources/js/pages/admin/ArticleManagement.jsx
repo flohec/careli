@@ -14,7 +14,7 @@ export default function ArticleManagement() {
     const [articles, setArticles] = useState([]);
     const [pagination, setPagination] = useState({
         current: 1,
-        pageSize: 10,
+        pageSize: 9,
         total: 0,
     });
     const [editDrawerVisible, setEditDrawerVisible] = useState(false);
@@ -236,7 +236,7 @@ export default function ArticleManagement() {
                     <Row gutter={[20, 20]}>
                         {articles.map((article) => (
                             <Col key={article.id} xs={24} sm={12} md={8}>
-                                <ArticleCard article={article} onEdit={openEditDrawer} />
+                                <ArticleCard article={article} onEdit={openEditDrawer} buyable={true} />
                             </Col>
                         ))}
                     </Row>
