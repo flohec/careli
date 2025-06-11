@@ -127,7 +127,7 @@ export default function AppLayout() {
             <Content style={{ padding: '1rem', flex: 1 }}>
                 <Outlet />
             </Content>
-            <Footer style={{ background: '#3D7CC6', color: '#fff' }}>
+            <Footer style={{ background: 'linear-gradient(135deg, #3D7CC6, #132740)', color: '#fff' }}>
                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'stretch', marginBottom: '1rem' }}>
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', justifyContent: 'center' }}>
                        <div style={{ display: 'flex', gap: '2rem' }}>
@@ -141,7 +141,7 @@ export default function AppLayout() {
                        </div>
                    </div>
                    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                       <img src="/images/logo-extended.png" alt="Logo" style={{ height: '50px', marginTop: '1%' }} />
+                       <img src="/images/logo-extended4.png" alt="Logo" style={{ height: '50px', marginTop: '1%' }} />
                        <p style={{ fontSize: "30px"}}>| Cleverer Marketing Spruch</p>
                    </div>
                </div>
