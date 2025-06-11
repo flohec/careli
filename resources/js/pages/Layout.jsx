@@ -42,13 +42,12 @@ export default function AppLayout() {
         <Layout style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Header style={{ display: 'flex', alignItems: 'center', background: '#fff', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', height: '80px' }}>
                 <img
-                    src="/images/logo.png"
+                    src="/images/logo2.png"
                     alt="Logo"
                     style={{
-                        height: '200px',
-                        width: '120px',
+                        height: '100px',
+                        width: '70px',
                         objectFit: 'contain',
-                        marginLeft: '-1%',
                         marginRight: '2%',
                     }}
                 />
@@ -128,8 +127,24 @@ export default function AppLayout() {
             <Content style={{ padding: '1rem', flex: 1 }}>
                 <Outlet />
             </Content>
-            <Footer style={{ textAlign: 'center', background: '#2D94DE', color: '#fff' }}>
-                © {new Date().getFullYear()} My Application. All rights reserved.
+            <Footer style={{ background: '#3D7CC6', color: '#fff' }}>
+               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'stretch', marginBottom: '1rem' }}>
+                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', justifyContent: 'center' }}>
+                       <div style={{ display: 'flex', gap: '2rem' }}>
+                           <p>Impressum</p>
+                           <p>Datenschutzerklärung</p>
+                           <p>Nutzungsbedingungen</p>
+                           <p>Cookie Settings</p>
+                       </div>
+                       <div>
+                           © {new Date().getFullYear()} Careli GmbH
+                       </div>
+                   </div>
+                   <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                       <img src="/images/logo-extended.png" alt="Logo" style={{ height: '50px', marginTop: '1%' }} />
+                       <p style={{ fontSize: "30px"}}>| Cleverer Marketing Spruch</p>
+                   </div>
+               </div>
             </Footer>
         </Layout>
     );

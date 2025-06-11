@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
-
 class ArticleController extends Controller
 {
-
-    public function getAllArticles(Request $request)
+    public function getAllArticles(Request $request) : JsonResponse
     {
         $perPage = $request->query('per_page', 10);
         $category = $request->query('category');
@@ -34,7 +33,7 @@ class ArticleController extends Controller
             ],
         ]);
     }
-    public function store(Request $request)
+    public function store(Request $request) : JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required|string',
@@ -78,7 +77,7 @@ class ArticleController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, \App\Models\Article $article)
+    public function update(Request $request, \App\Models\Article $article) : JsonResponse
     {
         $validated = $request->validate([
             'name' => 'required|string',
