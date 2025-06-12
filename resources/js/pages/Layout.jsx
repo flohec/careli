@@ -128,20 +128,20 @@ export default function AppLayout() {
                 <Outlet />
             </Content>
             <Footer style={{ background: 'linear-gradient(135deg, #3D7CC6, #132740)', color: '#fff' }}>
-               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'stretch', marginBottom: '1rem' }}>
+               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'stretch' }}>
                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', justifyContent: 'center' }}>
-                       <div style={{ display: 'flex', gap: '2rem' }}>
-                           <p>Impressum</p>
-                           <p>Datenschutzerklärung</p>
-                           <p>Nutzungsbedingungen</p>
-                           <p>Cookie Settings</p>
+                       <div style={{ display: 'flex', gap: '2rem', marginTop: '-2%' }}>
+                           <Link className="footer-link" to="/imprint">Impressum</Link>
+                           <Link className="footer-link" to="/privacy-policy">Datenschutzerklärung</Link>
+                           <Link className="footer-link" to="/terms-of-use">Nutzungsbedingungen</Link>
+                           <Link className="footer-link" to="/cookies">Cookie Settings</Link>
                        </div>
-                       <div>
+                       <div style={{ marginTop: '2%'}}>
                            © {new Date().getFullYear()} Careli GmbH
                        </div>
                    </div>
                    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                       <img src="/images/logo-extended4.png" alt="Logo" style={{ height: '50px', marginTop: '1%' }} />
+                       <img src="/images/logo-extended.png" alt="Logo" style={{ height: '70px', marginTop: '1%' }} />
                        <p style={{ fontSize: "30px"}}>| Cleverer Marketing Spruch</p>
                    </div>
                </div>
