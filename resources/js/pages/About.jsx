@@ -8,7 +8,7 @@ export default function About() {
         }}>
             <h1>Über Uns</h1>
             <p>Willkommen auf  utettnserer Über Uns Seite! Hier erfahren Sie mehr über unser Unternehmen, unsere Mission und unser Team.</p>
-            <p>Wir sind ein innovatives Unternehmen, das sich auf die Bereitstellung von hochwertigen Produkten und Dienstleistungen spezialisiert hat. Unser Ziel ist es, unseren Kunden die besten Lösungen anzubieten und ihre Erwartungen zu übertreffen.</p>
+            <p>Wir sind e in innovatives Unternehmen, das sich auf die Bereitstellung von hochwertigen Produkten und Dienstleistungen spezialisiert hat. Unser Ziel ist es, unseren Kunden die besten Lösungen anzubieten und ihre Erwartungen zu übertreffen.</p>
         </div>
     );
 }
