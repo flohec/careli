@@ -1,7 +1,37 @@
-export default function FooterLinksPage({ type }) {
+import { Download } from 'lucide-react';
+import {useRef} from "react";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
+export default function FooterLinksPage({ type, downloadable = false }) {
     const headingStyle = { color: '#2B93DD', marginTop: '2.5rem' };
     const subHeadingStyle = { color: '#1677FF', marginTop: '1.5rem' };
     const firstHeadingStyle = { ...headingStyle, marginTop: 0 };
+    const contentRef = useRef(null);
+
+    const handleDownload = async () => {
+        if (type !== 'Allgemeine Geschäftsbedingungen') return;
+        const input = contentRef.current;
+        if (!input) return;
+        const canvas = await html2canvas(input, { scale: 1 });
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const padding = 10; // mm
+        const headerHeight = 15; // Platz für Header
+        pdf.setFontSize(18);
+        pdf.text(type, padding, padding + 8); // Header-Text (z.B. Titel)
+        const pdfWidth = pdf.internal.pageSize.getWidth() - 2 * padding;
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        pdf.addImage(
+            imgData,
+            'PNG',
+            padding,
+            padding + headerHeight,
+            pdfWidth,
+            pdfHeight
+        );
+        pdf.save('Allgemeine_Geschäftsbedingung.pdf');
+    };
 
     return (
         <div style={{
@@ -10,10 +40,44 @@ export default function FooterLinksPage({ type }) {
             paddingLeft: '5%',
             paddingRight: '5%',
         }}>
-            <h1 className="page-title">
-                {type}
-            </h1>
-            <div style={{ marginBottom: '5%' }}>
+           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 16 }}>
+                <h1 className="page-title" style={{ margin: 0 }}>
+                    {type}
+                </h1>
+                {downloadable && (
+                    <button
+                        onClick={handleDownload}
+                        style={{
+                            background: '#1677FF',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: 48,
+                            height: 48,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                            cursor: 'pointer',
+                            zIndex: 10,
+                            transition: 'background 0.2s, transform 0.2s, box-shadow 0.2s',
+                        }}
+                        title="Herunterladen"
+                        onMouseEnter={e => {
+                            e.currentTarget.style.background = '#125bb2';
+                            e.currentTarget.style.transform = 'scale(1.08)';
+                            e.currentTarget.style.boxShadow = '0 4px 16px rgba(22, 119, 255, 0.25)';
+                        }}
+                        onMouseLeave={e => {
+                            e.currentTarget.style.background = '#1677FF';
+                            e.currentTarget.style.transform = 'scale(1)';
+                            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+                        }}
+                    >
+                        <Download color="#fff" size={28} />
+                    </button>
+                )}
+            </div>
+            <div ref={type === 'Allgemeine Geschäftsbedingungen' ? contentRef : null} style={{ marginBottom: '5%' }}>
                 {type === 'Impressum' && (
                     <div style={{ fontSize: '1.2rem', lineHeight: '1.8' }}>
                         <h2 style={firstHeadingStyle}>Angaben gemäß § 5 TMG</h2>
@@ -90,11 +154,11 @@ export default function FooterLinksPage({ type }) {
                         </p>
                     </div>
                 )}
-                {type === 'Nutzungsbedingungen' && (
+                {type === 'Allgemeine Geschäftsbedingungen' && (
                     <div style={{ fontSize: '1.2rem', lineHeight: '1.8' }}>
                         <h2 style={firstHeadingStyle}>1. Geltungsbereich</h2>
                         <p>
-                            Diese Nutzungsbedingungen gelten für alle Bestellungen und die Nutzung unseres Webshops für Serverschränke und Zubehör.
+                            Diese allgemeinen Geschäftsbedingungen gelten für alle Bestellungen und die Nutzung unseres Webshops für Serverschränke und Zubehör.
                         </p>
                         <h2 style={headingStyle}>2. Vertragsschluss</h2>
                         <p>
@@ -112,11 +176,23 @@ export default function FooterLinksPage({ type }) {
                         <p>
                             Sie haben das Recht, binnen 14 Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. Details finden Sie in unserer Widerrufsbelehrung.
                         </p>
-                        <h2 style={headingStyle}>6. Haftung</h2>
+                        <h2 style={headingStyle}>6. Eigentumsvorbehalt</h2>
+                        <p>
+                            Die Ware bleibt bis zur vollständigen Bezahlung unser Eigentum.
+                        </p>
+                        <h2 style={headingStyle}>7. Gewährleistung</h2>
+                        <p>
+                            Es gelten die gesetzlichen Gewährleistungsrechte. Bei Mängeln der gelieferten Ware können Sie innerhalb von 24 Monaten ab Lieferung Nachbesserung oder Ersatzlieferung verlangen.
+                        </p>
+                        <h2 style={headingStyle}>8. Haftung</h2>
                         <p>
                             Wir haften nur für Vorsatz und grobe Fahrlässigkeit. Für leichte Fahrlässigkeit haften wir nur bei Verletzung wesentlicher Vertragspflichten.
                         </p>
-                        <h2 style={headingStyle}>7. Schlussbestimmungen</h2>
+                        <h2 style={headingStyle}>9. Datenschutz</h2>
+                        <p>
+                            Ihre Daten werden ausschließlich zur Abwicklung Ihrer Bestellung verwendet und nicht an Dritte weitergegeben, sofern keine gesetzliche Verpflichtung besteht. Weitere Informationen finden Sie in unserer Datenschutzerklärung.
+                        </p>
+                        <h2 style={headingStyle}>10. Schlussbestimmungen</h2>
                         <p>
                             Es gilt deutsches Recht. Gerichtsstand ist unser Firmensitz. Sollten einzelne Bestimmungen unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.
                         </p>

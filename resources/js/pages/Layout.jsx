@@ -4,13 +4,15 @@ import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import {useUser} from "../context/UserContext.jsx";
 import {useState} from "react";
 import { useLocation } from 'react-router-dom';
+import { LogIn, UserPlus, LogOut } from 'lucide-react';
 
 const { Header, Content, Footer } = Layout;
 
 export default function AppLayout() {
     const location = useLocation();
     const currentPath = location.pathname.split('/')[1] || 'home';
-    const { user, login, logout } = useUser();
+    const { user, login, logout, fetchUser } = useUser();
+    console.log(user)
     const role = user ? user?.role?.slug : 'guest';
     const [loginModalVisible, setLoginModalVisible] = useState(false);
     const [form] = Form.useForm();
@@ -20,6 +22,7 @@ export default function AppLayout() {
             const values = await form.validateFields();
             const result = await login(values.email, values.password);
             if (result.success) {
+                await fetchUser(); // User neu laden
                 antMessage.success(result.message || 'Login erfolgreich!');
                 setLoginModalVisible(false);
             } else {
@@ -32,6 +35,7 @@ export default function AppLayout() {
 
     const handleLogout = async () => {
         const result = await logout();
+        await fetchUser(); // User neu laden
         if (result.success) {
             antMessage.success(result.message);
         } else {
@@ -82,13 +86,25 @@ export default function AppLayout() {
                     <Dropdown
                         overlay={
                             <Menu>
-                                {!user ? (
+                                {!user ? [
+                                    <Menu.Item key="signup" onClick={() => setLoginModalVisible(true)}>
+                                        <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                            <UserPlus style={{ marginRight: 6, fontSize: 18 }} />
+                                            Registrieren
+                                        </span>
+                                    </Menu.Item>,
                                     <Menu.Item key="login" onClick={() => setLoginModalVisible(true)}>
-                                        Login
+                                        <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                            <LogIn style={{ marginRight: 6, fontSize: 18 }} />
+                                            Login
+                                        </span>
                                     </Menu.Item>
-                                ) : (
+                                ] : (
                                     <Menu.Item key="logout" onClick={handleLogout}>
-                                        Logout
+                                        <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                            <LogOut style={{ marginRight: 6, fontSize: 18 }} />
+                                            Logout
+                                        </span>
                                     </Menu.Item>
                                 )}
                             </Menu>
@@ -141,7 +157,7 @@ export default function AppLayout() {
                        <div style={{ display: 'flex', gap: '2rem', marginTop: '-2%' }}>
                            <Link className="footer-link" to="/imprint">Impressum</Link>
                            <Link className="footer-link" to="/privacy-policy">Datenschutzerklärung</Link>
-                           <Link className="footer-link" to="/terms-of-use">Nutzungsbedingungen</Link>
+                           <Link className="footer-link" to="/terms-of-use">AGB</Link>
                            <Link className="footer-link" to="/cookies">Cookie Settings</Link>
                        </div>
                        <div style={{ marginTop: '2%'}}>

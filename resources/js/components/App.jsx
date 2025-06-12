@@ -27,7 +27,7 @@ const App = () => (
                     {/* Footer Links */}
                     <Route path="imprint" element={<FooterLinksPage type="Impressum" />} />
                     <Route path="privacy-policy" element={<FooterLinksPage type="Datenschutzerklärung" />} />
-                    <Route path="terms-of-use" element={<FooterLinksPage type="Nutzungsbedingungen" />} />
+                    <Route path="terms-of-use" element={<FooterLinksPage type="Allgemeine Geschäftsbedingungen" downloadable={true} />} />
                     <Route path="cookies" element={<h1>About Page</h1>} />
                     <Route path="*" element={<h1>404 Not Found</h1>} />
                 </Route>

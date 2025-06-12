@@ -19,6 +19,15 @@ export const UserProvider = ({ children }) => {
         fetchUser();
     }, []);
 
+    const fetchUser = async () => {
+        try {
+            const response = await axios.get('/api/user', { withCredentials: true });
+            setUser(response.data.data || null);
+        } catch (error) {
+            setUser(null);
+        }
+    };
+
     const login = async (email, password) => {
         try {
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
@@ -65,7 +74,7 @@ export const UserProvider = ({ children }) => {
     };
 
     return (
-        <UserContext.Provider value={{ user, login, logout }}>
+        <UserContext.Provider value={{ user, login, logout, fetchUser }}>
             {children}
         </UserContext.Provider>
     );
