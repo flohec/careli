@@ -41,16 +41,24 @@ export default function AppLayout() {
     return (
         <Layout style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Header style={{ display: 'flex', alignItems: 'center', background: '#fff', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', height: '80px' }}>
-                <img
-                    src="/images/logo2.png"
-                    alt="Logo"
-                    style={{
-                        height: '100px',
-                        width: '70px',
-                        objectFit: 'contain',
-                        marginRight: '2%',
-                    }}
-                />
+                <Link to="/" style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                    marginRight: '2%',
+                }}>
+                    <img
+                        src="/images/logo2.png"
+                        alt="Logo"
+                        style={{
+                            height: '100px',
+                            width: '70px',
+                            objectFit: 'contain',
+                            marginRight: '4%',
+                        }}
+                    />
+                </Link>
                 <Menu mode="horizontal" selectedKeys={[currentPath]} style={{ lineHeight: '80px', flex: 1 }}>
                     <Menu.Item key="home">
                         <Link style={{ fontWeight: 'bold' }} to="/">Home</Link>

@@ -7,6 +7,7 @@ import UserManagement from "../pages/admin/UserManagement.jsx";
 import CompanyManagement from "../pages/admin/CompanyManagement.jsx";
 import ArticleManagement from "../pages/admin/ArticleManagement.jsx";
 import FooterLinksPage from "../pages/FooterLinksPage.jsx";
+import Shop from "../pages/shop/Shop.jsx";
 
 const App = () => (
     <UserProvider>
@@ -15,10 +16,14 @@ const App = () => (
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="home" element={<Home />} />
+                    {/* Admin Routes */}
                     <Route path="admin" element={<Admin />} />
                         <Route path="admin/users" element={<UserManagement />} />
                         <Route path="admin/companies" element={<CompanyManagement />} />
                         <Route path="admin/articles" element={<ArticleManagement />} />
+                    {/* Shop Routes */}
+                    <Route path="shop" element={<Shop />} />
+
                     {/* Footer Links */}
                     <Route path="imprint" element={<FooterLinksPage type="Impressum" />} />
                     <Route path="privacy-policy" element={<FooterLinksPage type="Datenschutzerklärung" />} />

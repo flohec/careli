@@ -30,4 +30,13 @@ html, body, #app {
     color: #e5f5f5;
     text-decoration: underline;
 }
+.page-title {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #2B93DD, #000066);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: left;
+    margin-bottom: 20px;
+}
 

@@ -9,15 +9,7 @@ export default function Admin() {
         paddingLeft: '5%',
         paddingRight: '5%',
     }}>
-        <h1 style={{
-            fontSize: '3rem',
-            fontWeight: 'bold',
-            background: 'linear-gradient(to right, #2B93DD, #000066)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textAlign: 'left',
-            marginBottom: '20px',
-        }}>
+        <h1 className="page-title">
             Admin Dashboard
         </h1>
         <div
