@@ -203,7 +203,6 @@ export default function AppLayout() {
                    </div>
                    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                        <img src="/images/logo-extended.png" alt="Logo" style={{ height: '70px', marginTop: '1%' }} />
-                       <p style={{ fontSize: "30px"}}>| Smart vernetzt. Sicher verstaut.</p>
                    </div>
                </div>
             </Footer>
