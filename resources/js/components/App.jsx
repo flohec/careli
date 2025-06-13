@@ -8,6 +8,7 @@ import CompanyManagement from "../pages/admin/CompanyManagement.jsx";
 import ArticleManagement from "../pages/admin/ArticleManagement.jsx";
 import FooterLinksPage from "../pages/FooterLinksPage.jsx";
 import Shop from "../pages/shop/Shop.jsx";
+import About from "../pages/About.jsx";
 import Configurator from "../pages/shop/Configurator.jsx";
 
 const App = () => (
@@ -17,7 +18,7 @@ const App = () => (
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="home" element={<Home />} />
-                    <Route path="about" element={<Home />} />
+                    <Route path="about" element={<About />} />
                     {/* Admin Routes */}
                     <Route path="admin" element={<Admin />} />
                         <Route path="admin/users" element={<UserManagement />} />

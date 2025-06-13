@@ -69,4 +69,10 @@ class User extends Authenticatable
             });
         }
     }
+
+    public function serverRackConfigs()
+    {
+        return $this->hasMany(ServerRackConfig::class);
+    }
+
 }

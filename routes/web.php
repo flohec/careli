@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ServerRackConfigController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,10 @@ Route::group(['prefix' => 'api/admin'], function () {
 
     Route::post('/articles', [ArticleController::class, 'store']);
     Route::put('/articles/{article}', [ArticleController::class, 'update']);
+});
+
+Route::group(['prefix' => 'api/user'], function () {
+    Route::post('/config/create', [ServerRackConfigController::class, 'store']);
+    Route::get('/configs', [ServerRackConfigController::class, 'show']);
+    Route::delete('/config/{id}', [ServerRackConfigController::class, 'destroy']);
 });
