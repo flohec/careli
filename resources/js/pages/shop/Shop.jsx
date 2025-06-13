@@ -1,3 +1,6 @@
+import NavigationCard from "../../components/NavigationCard.jsx";
+import {AppstoreOutlined, BankOutlined, UserOutlined} from "@ant-design/icons";
+
 export default function Shop() {
     return (
         <div style={{
@@ -6,11 +9,17 @@ export default function Shop() {
             paddingLeft: '5%',
             paddingRight: '5%',
         }}>
-            <h1 className="page-title">
-                Shop
-            </h1>
-            <div style={{ marginBottom: '5%' }}>
-                <p>Hier finden Sie unsere Produkte.</p>
+            <div
+                style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '20px',
+                }}
+            >
+                <NavigationCard title="Standard Serverschränke" icon={<UserOutlined/>} link="/admin/users"/>
+                <NavigationCard title="Deluxe Serverschränke" icon={<BankOutlined/>} link="/admin/companies"/>
+                <NavigationCard title="Kühlung" icon={<AppstoreOutlined/>} link="/admin/articles"/>
+                <NavigationCard title="Serverschrank Konfigurator" icon={<AppstoreOutlined/>} link="/admin/articles"/>
             </div>
         </div>
     );

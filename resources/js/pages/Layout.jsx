@@ -67,11 +67,48 @@ export default function AppLayout() {
                     <Menu.Item key="home">
                         <Link style={{ fontWeight: 'bold' }} to="/">Home</Link>
                     </Menu.Item>
-                    <Menu.Item key="shop">
-                        <Link style={{ fontWeight: 'bold' }} to="/shop">Shop</Link>
+                    <Menu.Item key="serverracks">
+                        <Link style={{ fontWeight: 'bold' }} to="/server-racks">Serverschränke</Link>
                     </Menu.Item>
+                    <Menu.Item key="cooling">
+                        <Link style={{ fontWeight: 'bold' }} to="/cooling">Kühlung</Link>
+                    </Menu.Item>
+                   <Menu.Item key="configurator">
+                       <Link
+                           style={{
+                               fontWeight: 'bold',
+                               display: 'flex',
+                               alignItems: 'center',
+                               gap: 8,
+                               position: 'relative'
+                           }}
+                           to="/configurator"
+                       >
+                           Serverschrank Konfigurator
+                           <span
+                               style={{
+                                   background: 'linear-gradient(90deg, #1677FF 60%, #3D7CC6 100%)',
+                                   color: '#fff',
+                                   borderRadius: '999px',
+                                   fontSize: '0.7rem',
+                                   padding: '2px 10px',
+                                   marginLeft: 0,
+                                   marginBottom: 10,
+                                   fontWeight: 700,
+                                   boxShadow: '0 2px 8px rgba(22, 119, 255, 0.15)',
+                                   letterSpacing: 1,
+                                   lineHeight: 1.5,
+                                   display: 'inline-block',
+                                   verticalAlign: 'middle',
+                                   border: '1px solid #1677FF'
+                           }}
+                           >
+                               NEW
+                           </span>
+                       </Link>
+                   </Menu.Item>
                     <Menu.Item key="about">
-                        <Link style={{ fontWeight: 'bold' }} to="/about">About</Link>
+                        <Link style={{ fontWeight: 'bold' }} to="/about">Über uns</Link>
                     </Menu.Item>
                     { role === 'admin' && (
                         <Menu.Item key="admin">
@@ -166,7 +203,6 @@ export default function AppLayout() {
                    </div>
                    <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                        <img src="/images/logo-extended.png" alt="Logo" style={{ height: '70px', marginTop: '1%' }} />
-                       <p style={{ fontSize: "30px"}}>| Cleverer Marketing Spruch</p>
                    </div>
                </div>
             </Footer>

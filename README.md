@@ -71,5 +71,4 @@ docker exec -it laravel_app php artisan storage:link
 sudo chown -R $USER:$USER /home/florian/projects/careli
 sudo chown -R $USER:$USER /home/florian/projects/careli/node_modules
 docker exec -it laravel_app php artisan key:generate
-
 docker exec -it laravel_app php artisan migrate

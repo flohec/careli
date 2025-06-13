@@ -9,6 +9,7 @@ import ArticleManagement from "../pages/admin/ArticleManagement.jsx";
 import FooterLinksPage from "../pages/FooterLinksPage.jsx";
 import Shop from "../pages/shop/Shop.jsx";
 import About from "../pages/About.jsx";
+import Configurator from "../pages/shop/Configurator.jsx";
 
 const App = () => (
     <UserProvider>
@@ -24,7 +25,9 @@ const App = () => (
                         <Route path="admin/companies" element={<CompanyManagement />} />
                         <Route path="admin/articles" element={<ArticleManagement />} />
                     {/* Shop Routes */}
-                    <Route path="shop" element={<Shop />} />
+                    <Route path="server-racks" element={<Shop />} />
+                    <Route path="cooling" element={<Shop />} />
+                    <Route path="configurator" element={<Configurator />} />
 
                     {/* Footer Links */}
                     <Route path="imprint" element={<FooterLinksPage type="Impressum" />} />
