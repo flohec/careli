@@ -108,4 +108,9 @@ class ArticleController extends Controller
         ], 200);
     }
 
+    public function show($id)
+    {
+        return Article::with('category')->findOrFail($id);
+    }
+
 }

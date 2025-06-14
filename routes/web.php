@@ -34,3 +34,6 @@ Route::group(['prefix' => 'api/user'], function () {
     Route::get('/configs', [ServerRackConfigController::class, 'show']);
     Route::delete('/config/{id}', [ServerRackConfigController::class, 'destroy']);
 });
+
+Route::get('/api/articles/{id}', [ArticleController::class, 'show']);
+

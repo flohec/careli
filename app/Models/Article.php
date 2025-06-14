@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    protected $table = 'articles';
     protected $fillable = [
         'name', 'description', 'filepath', 'thumbnail', 'base_price',
         'quantity', 'height', 'width', 'depth', 'weight', 'category_id'
@@ -28,6 +29,12 @@ class Article extends Model
 
     public function scopeCategory($query, $category)
     {
+        if(!empty($category) || $category === 'all') {
+            $query->whereHas('category', function ($q) {
+                $q->where('slug', '=', 'standard')
+                ->orWhere('slug', '=', 'deluxe');
+            });
+        }
         if (!empty($category) && $category !== 'all') {
             $query->whereHas('category', function ($q) use ($category) {
                 $q->where('slug', $category);

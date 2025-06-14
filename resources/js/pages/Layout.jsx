@@ -12,7 +12,6 @@ export default function AppLayout() {
     const location = useLocation();
     const currentPath = location.pathname.split('/')[1] || 'home';
     const { user, login, logout, fetchUser } = useUser();
-    console.log(user)
     const role = user ? user?.role?.slug : 'guest';
     const [loginModalVisible, setLoginModalVisible] = useState(false);
     const [form] = Form.useForm();
@@ -67,7 +66,7 @@ export default function AppLayout() {
                     <Menu.Item key="home">
                         <Link style={{ fontWeight: 'bold' }} to="/">Home</Link>
                     </Menu.Item>
-                    <Menu.Item key="serverracks">
+                    <Menu.Item key="server-racks">
                         <Link style={{ fontWeight: 'bold' }} to="/server-racks">Serverschränke</Link>
                     </Menu.Item>
                     <Menu.Item key="cooling">

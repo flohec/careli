@@ -1,13 +1,13 @@
 import { Card, Tooltip } from "antd";
 import "../../css/ArticleCard.css";
 import { Package, Ruler, Weight } from "lucide-react";
+import { Link } from "react-router-dom";
 
-
-export default function ArticleCard({ article, onEdit }) {
+export default function ArticleCard({ article, onEdit, linkable = false }) {
     const imageUrl = article.filepath || "/images/logo.png";
 
     return (
-        <div className="article-card-wrapper">
+        <Link to={`/article/${hashId(article.id)}`} className="article-card-wrapper">
             <Card
                 hoverable
                 className="article-card"
@@ -46,8 +46,10 @@ export default function ArticleCard({ article, onEdit }) {
                         </div>
                     </div>
                 </div>
-
             </Card>
-        </div>
-    );
+        </Link>
+);
+}
+function hashId(id) {
+    return btoa(id.toString()); // "12" → "MTI="
 }
