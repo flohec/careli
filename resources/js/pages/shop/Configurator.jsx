@@ -1,14 +1,19 @@
 import React, {useState, useMemo, useEffect} from 'react'
-import { Slider, Card, Switch, Button, Alert, notification } from 'antd'
+import { Slider, Card, Switch, Button, Alert, notification, InputNumber } from 'antd'
 import 'antd/dist/reset.css'
 import ServerRackViewer from '../../components/ServerRackViewer.jsx'
 import {useUser} from "../../context/UserContext.jsx";
 import { Trash2 } from 'lucide-react';
+import axios from "axios";
 
 
 export default function Configurator() {
     const [errorMsg, setErrorMsg] = useState(null)
     const [successMsg, setSuccessMsg] = useState(null)
+    const [cartStatus, setCartStatus] = useState(null); // 'success' | 'error'
+    const [cartMessage, setCartMessage] = useState("");
+    const [quantity, setQuantity] = useState(1);
+
 
     const [width, setWidth] = useState(1)
     const [height, setHeight] = useState(2)
@@ -122,6 +127,46 @@ export default function Configurator() {
         }
     };
 
+    const handleAddToCart = async () => {
+        if (!user) {
+            setCartStatus("error");
+            setCartMessage("Bitte melden Sie sich an, um Artikel zum Warenkorb hinzuzufügen.");
+            return;
+        }
+
+        try {
+            await axios.post('/api/cart-config', {
+                type: 'config',
+                quantity: quantity,
+                config: {
+                    width,
+                    height,
+                    depth,
+                    color,
+                    has_door: hasDoor,
+                    shelf_count: shelfCount,
+                    total_price: totalPrice
+                }
+            }, {
+                withCredentials: true
+            });
+
+            setCartStatus("success");
+            setCartMessage(`Konfiguration wurde dem Warenkorb hinzugefügt (${quantity}x)`);
+
+        } catch (err) {
+            console.error(err);
+            setCartStatus("error");
+            setCartMessage("Fehler beim Hinzufügen zum Warenkorb.");
+        }
+
+        setTimeout(() => {
+            setCartStatus(null);
+            setCartMessage("");
+        }, 5000);
+    };
+
+
 
     return (
         <div style={{ padding: '0 5%' }}>
@@ -230,7 +275,7 @@ export default function Configurator() {
                             </p>
                             <strong style={{fontSize: '15px'}}>Glastüre:</strong>
                             <p style={{fontSize: '15px'}}>
-                                 {hasDoor ? `${doorArea.toFixed(2)} m² × 200 € = ${doorPrice.toFixed(2)} €` : "0.00 €"}
+                                {hasDoor ? `${doorArea.toFixed(2)} m² × 200 € = ${doorPrice.toFixed(2)} €` : "0.00 €"}
                             </p>
                             <strong style={{fontSize: '15px'}}>Regalböden:</strong>
                             <p style={{fontSize: '15px'}}>
@@ -242,15 +287,32 @@ export default function Configurator() {
                                 {totalPrice.toFixed(2)} €
                             </h2>
                         </div>
+                        {cartStatus && (
+                            <Alert
+                                message={cartMessage}
+                                type={cartStatus}
+                                showIcon
+                                style={{marginBottom: "1rem", width: "100%"}}
+                            />
+                        )}
+                        <label>Menge</label>
+                        <InputNumber
+                            min={1}
+                            max={99}
+                            defaultValue={1}
+                            value={quantity}
+                            onChange={setQuantity}
+                            style={{width: '100%', marginBottom: 16}}
+                        />
 
-                        <div style={{marginTop: '24px', display: 'flex', gap: '12px' }}>
+                        <div style={{marginTop: '24px', display: 'flex', gap: '12px'}}>
                             <Button type="default" block onClick={handleSave}>Speichern</Button>
-                            <Button type="primary" block>Zum Warenkorb</Button>
+                            <Button type="primary" block onClick={handleAddToCart}>Zum Warenkorb</Button>
                         </div>
                     </Card>
                 </div>
             </div>
-            <div style={{ marginBottom: '5%'}}>
+            <div style={{marginBottom: '5%'}}>
                 <h2 className="page-title" style={{marginTop: '2%'}}>Gespeicherte Serverschränke</h2>
 
                 {user === null ? (

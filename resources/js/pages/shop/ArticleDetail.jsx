@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { message } from "antd";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Rate, Spin, Alert, Avatar, Divider, Button } from "antd";
+import { Rate, Spin, Alert, Avatar, Divider, Button, InputNumber } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import {useUser} from "../../context/UserContext.jsx";
 
 const placeholderImg = "/images/logo.png";
 
@@ -26,10 +28,14 @@ const fakeReviews = [
 
 export default function ArticleDetail() {
     const { id: hashedId } = useParams();
+    const [cartStatus, setCartStatus] = useState(null); // 'success' | 'error'
+    const [cartMessage, setCartMessage] = useState("");
     const id = atob(hashedId);
     const [article, setArticle] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedQuantity, setSelectedQuantity] = useState(1);
+    const { user } = useUser(); // Assuming you have a useUser hook to get user info
 
     useEffect(() => {
         const fetchArticle = async () => {
@@ -53,6 +59,39 @@ export default function ArticleDetail() {
     if (error || !article) {
         return <Alert message={error || "Kein Artikel gefunden"} type="error" showIcon style={{ marginTop: "30px" }} />;
     }
+    const handleAddToCart = async () => {
+        if (!user) {
+            setCartStatus("error");
+            setCartMessage("Bitte melden Sie sich an, um Artikel zum Warenkorb hinzuzufügen.");
+            return;
+        }
+
+        try {
+            await axios.post('/api/cart', {
+                article_id: article.id,
+                type: 'article',
+                quantity: selectedQuantity,
+            }, {
+                withCredentials: true
+            });
+
+            setCartStatus("success");
+            setCartMessage(`${article.name} wurde dem Warenkorb hinzugefügt (${selectedQuantity}x)`);
+
+        } catch (err) {
+            console.error(err);
+            setCartStatus("error");
+            setCartMessage("Fehler beim Hinzufügen zum Warenkorb.");
+        }
+
+        // optional: Alert nach 5 Sekunden automatisch ausblenden
+        setTimeout(() => {
+            setCartStatus(null);
+            setCartMessage("");
+        }, 5000);
+    };
+
+
 
     return (
         <div style={{ width: "100%", maxWidth: "1300px", margin: "0 auto", padding: "3rem 2rem" }}>
@@ -80,19 +119,40 @@ export default function ArticleDetail() {
                 </div>
 
                 {/* Artikeldetails */}
-                <div style={{ flex: "1 1 400px" }}>
-                    <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>{article.name}</h1>
-                    <h2 style={{ fontSize: "1.5rem", color: "#1677FF", marginBottom: "1.5rem" }}>
+                <div style={{flex: "1 1 400px"}}>
+                    <h1 style={{fontSize: "2.5rem", marginBottom: "1rem"}}>{article.name}</h1>
+                    <h2 style={{fontSize: "1.5rem", color: "#1677FF", marginBottom: "1.5rem"}}>
                         {parseFloat(article.base_price).toFixed(2)} €
                     </h2>
 
-                    <p style={{ fontSize: "1.1rem", marginBottom: "1rem", color: "#444" }}>
+                    <p style={{
+                        fontSize: "1.3rem",
+                        marginBottom: "2rem",
+                        color: "#222",
+                        backgroundColor: "#f5f7fa",
+                        padding: "1.2rem",
+                        borderRadius: "12px",
+                        lineHeight: 1.7,
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.05)"
+                    }}>
                         {article.description}
                     </p>
 
-                    <div style={{ marginBottom: "2rem" }}>
-                        <h3 style={{ marginBottom: "0.5rem" }}>Details</h3>
-                        <ul style={{ lineHeight: 1.8, paddingLeft: 20 }}>
+                    <div style={{marginBottom: "2.5rem"}}>
+                        <h3 style={{
+                            marginBottom: "1rem",
+                            fontSize: "1.5rem",
+                            borderBottom: "2px solid #e0e0e0",
+                            paddingBottom: "0.3rem"
+                        }}>
+                            Details
+                        </h3>
+                        <ul style={{
+                            lineHeight: 2,
+                            paddingLeft: 25,
+                            fontSize: "1.2rem",
+                            color: "#333",
+                        }}>
                             <li><strong>Kategorie:</strong> {article.category?.name}</li>
                             <li><strong>Größe:</strong> {article.height}×{article.width}×{article.depth} cm</li>
                             <li><strong>Gewicht:</strong> {article.weight} kg</li>
@@ -100,15 +160,32 @@ export default function ArticleDetail() {
                             <li><strong>Artikel-Nr.:</strong> {article.id}</li>
                         </ul>
                     </div>
-
-                    <Button type="primary" size="large" style={{ borderRadius: "8px" }}>
-                        In den Warenkorb
-                    </Button>
+                    {cartStatus && (
+                        <Alert
+                            message={cartMessage}
+                            type={cartStatus}
+                            showIcon
+                            style={{ marginBottom: "1rem", width: "100%" }}
+                        />
+                    )}
+                    <div style={{display: "flex", alignItems: "center", gap: "1rem", marginTop: "2rem"}}>
+                        <InputNumber
+                            min={1}
+                            max={article.quantity}
+                            defaultValue={1}
+                            value={selectedQuantity}
+                            onChange={(value) => setSelectedQuantity(value)}
+                            style={{width: 100}}
+                        />
+                        <Button type="primary" size="large" style={{borderRadius: "8px"}} onClick={handleAddToCart}>
+                            In den Warenkorb
+                        </Button>
+                    </div>
                 </div>
             </div>
 
             {/* Bewertungen */}
-            <Divider orientation="left" plain style={{ fontSize: "20px" }}>
+            <Divider orientation="left" plain style={{fontSize: "20px"}}>
                 Kundenbewertungen
             </Divider>
 

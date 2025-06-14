@@ -116,7 +116,7 @@ export default function AppLayout() {
                     )}
                 </Menu>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-                    <Badge count={3} style={{ backgroundColor: '#007BFF' }}>
+                    <Badge count={0} style={{ backgroundColor: '#007BFF' }}>
                         <ShoppingCartOutlined style={{ fontSize: '40px', cursor: 'pointer' }} />
                     </Badge>
                     <Dropdown

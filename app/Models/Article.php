@@ -41,4 +41,9 @@ class Article extends Model
             });
         }
     }
+
+    public function cartItems()
+    {
+        return $this->morphMany(ShoppingCart::class, 'cartable');
+    }
 }
