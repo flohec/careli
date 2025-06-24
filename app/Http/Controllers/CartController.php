@@ -65,4 +65,22 @@ class CartController extends Controller
 
         return response()->json(['message' => 'Konfiguration wurde dem Warenkorb hinzugefügt.']);
     }
+
+    public function getCart()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Nicht authentifiziert.'], 401);
+        }
+
+        $cartItems = ShoppingCart::with(['cartable'])
+            ->where('user_id', $user->id)
+            ->get();
+
+        return response()->json([
+            'items' => $cartItems,
+        ]);
+    }
+
 }

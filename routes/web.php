@@ -39,4 +39,5 @@ Route::group(['prefix' => 'api/user'], function () {
 Route::get('/api/articles/{id}', [ArticleController::class, 'show']);
 Route::post('/api/cart', [CartController::class, 'store']);
 Route::post('/api/cart-config', [CartController::class, 'storeConfig']);
+Route::get('/api/get-cart', [CartController::class, 'getCart']);
 

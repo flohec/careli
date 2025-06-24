@@ -2,7 +2,7 @@ import { Layout, Menu, Badge, Avatar, Dropdown, Modal, Form, Input, message as a
 import { Link, Outlet } from 'react-router-dom';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import {useUser} from "../context/UserContext.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useLocation } from 'react-router-dom';
 import { LogIn, UserPlus, LogOut } from 'lucide-react';
 
@@ -15,6 +15,7 @@ export default function AppLayout() {
     const role = user ? user?.role?.slug : 'guest';
     const [loginModalVisible, setLoginModalVisible] = useState(false);
     const [form] = Form.useForm();
+    const [cartAmount, setCartAmount] = useState(0);
 
     const handleLogin = async () => {
         try {
@@ -116,9 +117,11 @@ export default function AppLayout() {
                     )}
                 </Menu>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-                    <Badge count={0} style={{ backgroundColor: '#007BFF' }}>
-                        <ShoppingCartOutlined style={{ fontSize: '40px', cursor: 'pointer' }} />
-                    </Badge>
+                    <Link to={`/checkout`} style={{ display: 'flex', alignItems: 'center' }}>
+                        <Badge count={cartAmount} style={{ backgroundColor: '#007BFF' }}>
+                            <ShoppingCartOutlined style={{ fontSize: '40px', cursor: 'pointer' }} />
+                        </Badge>
+                    </Link>
                     <Dropdown
                         overlay={
                             <Menu>

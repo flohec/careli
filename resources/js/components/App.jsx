@@ -12,6 +12,7 @@ import About from "../pages/About.jsx";
 import Configurator from "../pages/shop/Configurator.jsx";
 import Cooling from "../pages/shop/Cooling.jsx";
 import ArticleDetail from "../pages/shop/ArticleDetail.jsx";
+import Checkout from "../pages/Checkout.jsx";
 
 const App = () => (
     <UserProvider>
@@ -27,6 +28,7 @@ const App = () => (
                         <Route path="admin/companies" element={<CompanyManagement />} />
                         <Route path="admin/articles" element={<ArticleManagement />} />
                     {/* Shop Routes */}
+                    <Route path="checkout" element={<Checkout />} />
                     <Route path="server-racks" element={<Shop />} />
                     <Route path="cooling" element={<Cooling />} />
                     <Route path="configurator" element={<Configurator />} />
