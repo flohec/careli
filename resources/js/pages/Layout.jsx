@@ -187,7 +187,7 @@ export default function AppLayout() {
                 </Form>
             </Modal>
 
-            <Content style={{ paddingTop: '1rem', flex: 1 }}>
+            <Content style={{ flex: 1 }}>
                 <Outlet />
             </Content>
             <Footer style={{ background: 'linear-gradient(135deg, #3D7CC6, #132740)', color: '#fff' }}>
