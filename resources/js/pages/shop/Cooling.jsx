@@ -5,7 +5,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import ArticleCard from "../../components/ArticleCard.jsx";
 
-export default function Shop() {
+export default function Cooling() {
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(false);
     const [pagination, setPagination] = useState({
@@ -13,11 +13,11 @@ export default function Shop() {
         pageSize: 9,
         total: 0,
     });
-    const [category, setCategory] = useState('all');
     const [search, setSearch] = useState('');
 
-    const fetchArticles = async (page = 1, pageSize = 9, category = 'all', search = "") => {
+    const fetchArticles = async (page = 1, pageSize = 9, category = 'cooling', search = "") => {
         setLoading(true);
+        console.log('category', category);
         try {
             const response = await axios.get('/api/admin/get-all-articles', {
                 params: { per_page: pageSize, page, category, search },
@@ -37,8 +37,8 @@ export default function Shop() {
     };
 
     useEffect(() => {
-        fetchArticles(1, pagination.pageSize, category, search); // reset to page 1 on filter change
-    }, [category, search]);
+        fetchArticles(1, pagination.pageSize, 'cooling', search); // reset to page 1 on filter change
+    }, [search]);
 
     return (
         <div style={{
@@ -75,28 +75,6 @@ export default function Shop() {
                     onChange={(e) => setSearch(e.target.value)}
                     allowClear
                 />
-
-                {/* Category Buttons */}
-                <Space>
-                    <Button
-                        type={category === 'all' ? 'primary' : 'default'}
-                        onClick={() => setCategory('all')}
-                    >
-                        Alle
-                    </Button>
-                    <Button
-                        type={category === 'standard' ? 'primary' : 'default'}
-                        onClick={() => setCategory('standard')}
-                    >
-                        Standard
-                    </Button>
-                    <Button
-                        type={category === 'deluxe' ? 'primary' : 'default'}
-                        onClick={() => setCategory('deluxe')}
-                    >
-                        Deluxe
-                    </Button>
-                </Space>
             </div>
 
 
@@ -119,7 +97,7 @@ export default function Shop() {
                         pageSize={pagination.pageSize}
                         total={pagination.total}
                         onChange={(page) =>
-                            fetchArticles(page, pagination.pageSize, category, search)
+                            fetchArticles(page, pagination.pageSize, 'cooling', search)
                         }
                         showSizeChanger={false}
                     />

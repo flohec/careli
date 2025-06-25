@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ServerRackConfigController;
 use App\Http\Controllers\UserController;
@@ -34,3 +35,9 @@ Route::group(['prefix' => 'api/user'], function () {
     Route::get('/configs', [ServerRackConfigController::class, 'show']);
     Route::delete('/config/{id}', [ServerRackConfigController::class, 'destroy']);
 });
+
+Route::get('/api/articles/{id}', [ArticleController::class, 'show']);
+Route::post('/api/cart', [CartController::class, 'store']);
+Route::post('/api/cart-config', [CartController::class, 'storeConfig']);
+Route::get('/api/get-cart', [CartController::class, 'getCart']);
+

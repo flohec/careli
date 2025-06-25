@@ -2,7 +2,7 @@ import { Layout, Menu, Badge, Avatar, Dropdown, Modal, Form, Input, message as a
 import { Link, Outlet } from 'react-router-dom';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import {useUser} from "../context/UserContext.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { useLocation } from 'react-router-dom';
 import { LogIn, UserPlus, LogOut } from 'lucide-react';
 
@@ -12,10 +12,10 @@ export default function AppLayout() {
     const location = useLocation();
     const currentPath = location.pathname.split('/')[1] || 'home';
     const { user, login, logout, fetchUser } = useUser();
-    console.log(user)
     const role = user ? user?.role?.slug : 'guest';
     const [loginModalVisible, setLoginModalVisible] = useState(false);
     const [form] = Form.useForm();
+    const [cartAmount, setCartAmount] = useState(0);
 
     const handleLogin = async () => {
         try {
@@ -67,7 +67,7 @@ export default function AppLayout() {
                     <Menu.Item key="home">
                         <Link style={{ fontWeight: 'bold' }} to="/">Home</Link>
                     </Menu.Item>
-                    <Menu.Item key="serverracks">
+                    <Menu.Item key="server-racks">
                         <Link style={{ fontWeight: 'bold' }} to="/server-racks">Serverschränke</Link>
                     </Menu.Item>
                     <Menu.Item key="cooling">
@@ -117,9 +117,11 @@ export default function AppLayout() {
                     )}
                 </Menu>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
-                    <Badge count={3} style={{ backgroundColor: '#007BFF' }}>
-                        <ShoppingCartOutlined style={{ fontSize: '40px', cursor: 'pointer' }} />
-                    </Badge>
+                    <Link to={`/checkout`} style={{ display: 'flex', alignItems: 'center' }}>
+                        <Badge count={cartAmount} style={{ backgroundColor: '#007BFF' }}>
+                            <ShoppingCartOutlined style={{ fontSize: '40px', cursor: 'pointer' }} />
+                        </Badge>
+                    </Link>
                     <Dropdown
                         overlay={
                             <Menu>
@@ -185,7 +187,7 @@ export default function AppLayout() {
                 </Form>
             </Modal>
 
-            <Content style={{ padding: '1rem', flex: 1 }}>
+            <Content style={{ flex: 1 }}>
                 <Outlet />
             </Content>
             <Footer style={{ background: 'linear-gradient(135deg, #3D7CC6, #132740)', color: '#fff' }}>
